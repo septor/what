@@ -12,20 +12,19 @@ include_once(e_PLUGIN."what/circus.php");
 global $eMenuActive;
 
 if(USER){
-
-	$timeframe = (($menu_pref['f_timeframe']) ? $menu_pref['f_timeframe'] : 259200);
-	$notifytpe = (($menu_pref['f_notify']) ? strtolower($menu_pref['f_notify']) : "");
+	
+	$timeframe = (($pref['what_fatty_timeframe']) ? $pref['what_fatty_timeframe'] : 432000);
 	$sincewhen = (time() - $timeframe);
 	$text = "";
 
-	if($menu_pref['f_layer'] == true){
-		$text .= "<div style='height:".(($menu_pref['f_layerheight']) ? $menu_pref['f_layerheight'] : "150")."px; overflow:auto;'>";
+	if($pref['what_fatty_layer'] == true){
+		$text .= "<div style='height:".(($pref['what_fatty_layerheight']) ? $pref['what_fatty_layerheight'] : "150")."px; overflow:auto;'>";
 	}
 	
 	
-	if($notifytype == "date"){
+	if(strtolower($pref['what_fatty_notify']) == "date"){
 		$text .= "As of ".date("F jS, Y", $sincewhen)." the following has happened:<br /><br />";
-	}else if($notifytype == "day"){
+	}else if(strtolower($pref['what_fatty_notify']) == "day"){
 		$text .= "This is what has happened in the last ".intval(intval($timeframe) / 86400)." day".(intval(intval($timeframe) / 86400) > 1 ? "s" : "").":<br /><br />";
 	}else{
 		$text .= "";
@@ -91,7 +90,7 @@ if(USER){
 
 
 	// forum posts
-	if($sql->db_Select_gen("SELECT  count(*) as count FROM #forum_t  as t LEFT JOIN #forum as f ON t.thread_forum_id = f.forum_id WHERE t.thread_datestamp > {$sincewhen} and f.forum_class IN (".USERCLASS_LIST.")") > 0){
+	if($sql->db_Count("forum_t", "(*)", "WHERE `thread_lastpost` > ".$sincewhen) > 0){
 		$text .= "<div class='forumheader'>Forum Posts</div><br />\n<ul>";
 		$sql->db_Select_gen("
 		SELECT t.thread_id, t.thread_name, t.thread_datestamp, t.thread_user, t.thread_lastpost, f.forum_id, f.forum_name, f.forum_class, u.user_name, fp.forum_class, lp.user_name AS lp_name, lp.user_id AS lp_id
@@ -125,7 +124,7 @@ if(USER){
 		$text .= "</ul><br />";
 	}
 
-	if($menu_pref['f_layer'] == true){
+	if($pref['what_fatty_layer'] == true){
 		$text .= "</div>";
 	}
 

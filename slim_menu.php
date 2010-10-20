@@ -44,6 +44,11 @@ if(USER){
 	$new_users = $sql->db_Count('user', '(user_join)', 'WHERE user_join > '.$time);
 	$pretext .= ($new_users > 0 ? ($new_users == 1 ? str_replace("{0}", $new_users, WHATSLIM_LAN13) : str_replace("{0}", $new_users, WHATSLIM_LAN14))."<br />" : "");
 
+
+	// recent visitors
+	$new_visits = $sql->db_Count('users', '(*)', 'WHERE `user_currentvisit` > '.$time);
+	$pretext .= ($new_visits > 0 ? ($new_visits == 1 ? str_replace("{0}", $new_visits, WHATSLIM_LAN15) : str_replace("{0}", $new_visits, WHATSLIM_LAN16))."<br />" : "");
+
 	// ------
 	$text = (($pretext) ? WHATSLIM_LAN01."<br /><br />\n".$pretext : WHATSLIM_LAN02);
 
