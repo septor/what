@@ -1,3 +1,9 @@
+# IMPORTANT!!!
+
+Before this plugin or menu item will work correctly with e107 you will need to rename the directory you're presented with to `what`.
+If you are not comfortable with doing this you will need to wait until I push a release to [plugins.e107](http://plugins.e107.org/).
+
+
 # What
 
 What is a collection of site activity based menu items. Over time more menus will be added. This file will attempt to describe what each menu item does.
