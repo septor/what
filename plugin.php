@@ -7,7 +7,7 @@ if (!defined("e107_INIT")) { exit; }
 
 // Plugin info -------------------------------------------------------------------------------------------------------
 $eplug_name = "What";
-$eplug_version = "0.1a";
+$eplug_version = "0.2";
 $eplug_author = "septor";
 $eplug_url = "http://painswitch.com/";
 $eplug_email = "patrickweaver@gmail.com";
@@ -53,7 +53,7 @@ $eplug_tables = array(
 	visit_time varchar(250) NOT NULL default '',
 	count int(10) unsigned NOT NULL default '0',
 	PRIMARY KEY  (id)
-	) TYPE=MyISAM AUTO_INCREMENT=1;");
+	) ENGINE=MyISAM AUTO_INCREMENT=1;");
 
 // Create a link in main menu (yes=TRUE, no=FALSE) -------------------------------------------------------------
 $eplug_link = FALSE;

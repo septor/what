@@ -1,9 +1,6 @@
 <?php
 
-// what plugin
-// slim menu
-
-// "since your last visit..."
+// since your last visit...
 
 if (!defined('e107_INIT')) { exit(); }
 

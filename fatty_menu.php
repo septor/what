@@ -1,8 +1,5 @@
 <?php
 
-// what plugin
-// fatty menu
-
 // this is what's happened in the last N days...
 
 if (!defined('e107_INIT')) { exit(); }
@@ -20,7 +17,6 @@ if(USER){
 	if($pref['what_fatty_layer'] == true){
 		$text .= "<div style='height:".(($pref['what_fatty_layerheight']) ? $pref['what_fatty_layerheight'] : "150")."px; overflow:auto;'>";
 	}
-	
 	
 	if(strtolower($pref['what_fatty_notify']) == "date"){
 		$text .= "As of ".date("F jS, Y", $sincewhen)." the following has happened:<br /><br />";
@@ -54,7 +50,6 @@ if(USER){
 		$text .= "</ul><br />";
 	}
 
-
 	// comments
 	if($sql->db_Count("comments", "(*)", "WHERE `comment_datestamp` > ".$sincewhen) > 0){
 		$text .= "<div class='forumheader'>Comments</div><br />\n<ul>";
@@ -69,7 +64,6 @@ if(USER){
 		}
 		$text .= "</ul><br />";
 	}
-
 
 	// chatbox posts
 	if(in_array('chatbox_menu',$eMenuActive)){
@@ -87,7 +81,6 @@ if(USER){
 			$text .= "</ul><br />";
 		}
 	}
-
 
 	// forum posts
 	if($sql->db_Count("forum_t", "(*)", "WHERE `thread_lastpost` > ".$sincewhen) > 0){

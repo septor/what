@@ -29,7 +29,7 @@ if(USER && $_SERVER['PHP_SELF'] != "/index.php"){
 
 	// gather the amount of times the user has visited this page
 	if($sql->db_Count("what_twobyfour", "(*)") > 0){
-		$sql->db_Select("what_twobyfour", "*", "page_name='".$page_name."' AND user_id='".USERID."'");
+		$sql->db_Select("what_twobyfour", "*", "page_name='"$tp->toDB(.$page_name)."' AND user_id='".USERID."'");
 		while($row2 = $sql->db_Fetch()){
 			$count = $row2['count'];
 		}
@@ -40,10 +40,10 @@ if(USER && $_SERVER['PHP_SELF'] != "/index.php"){
 	// now, let's determine if the user is viewing the page for the first time or not
 	if($count > 0){
 		// if they have we need to update the information count and visit_time
-		$sql->db_Update("what_twobyfour", "visit_time='".time()."', count='".($count+1)."' WHERE page_name='".$page_name."' AND user_id='".USERID."'");
+		$sql->db_Update("what_twobyfour", "visit_time='".time()."', count='".intval(($count+1))."' WHERE page_name='".$tp->toDB($page_name)."' AND user_id='".intval(USERID)."'");
 	}else{
 		// otherwise, we need to make a new entry
-		$sql->db_Insert("what_twobyfour", "'', '".USERID."', '".USERNAME."', '".$page_name."', '".time()."', '1'") or die(mysql_error());
+		$sql->db_Insert("what_twobyfour", "'', '".intval(USERID)."', '".$tp->toDB(USERNAME)."', '".$tp->toDB($page_name)."', '".time()."', '1'") or die(mysql_error());
 	}
 }
 
