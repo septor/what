@@ -6,6 +6,7 @@
 
 // ------------------------------- */
 
+
 // first, if the visitor is a user and isn't "viewing" index.php, we start the logging process
 if(USER && $_SERVER['PHP_SELF'] != "/index.php"){
 
@@ -17,7 +18,7 @@ if(USER && $_SERVER['PHP_SELF'] != "/index.php"){
 		$sql->db_Select("what_twobyfour", "*") or die(mysql_error());
 		while($row = $sql->db_Fetch()){
 			if($row['visit_time'] < $sincewhen){
-				$sql->db_Delete("what_twobyfour", "id='".$row['id']."'");
+				$sql->db_Delete("what_twobyfour", "id='".intval($row['id'])."'");
 			}
 		}
 	}
@@ -29,7 +30,7 @@ if(USER && $_SERVER['PHP_SELF'] != "/index.php"){
 
 	// gather the amount of times the user has visited this page
 	if($sql->db_Count("what_twobyfour", "(*)") > 0){
-		$sql->db_Select("what_twobyfour", "*", "page_name='"$tp->toDB(.$page_name)."' AND user_id='".USERID."'");
+		$sql->db_Select("what_twobyfour", "*", "page_name='".$tp->toDB($page_name)."' AND user_id='".intval(USERID)."'");
 		while($row2 = $sql->db_Fetch()){
 			$count = $row2['count'];
 		}
@@ -43,7 +44,7 @@ if(USER && $_SERVER['PHP_SELF'] != "/index.php"){
 		$sql->db_Update("what_twobyfour", "visit_time='".time()."', count='".intval(($count+1))."' WHERE page_name='".$tp->toDB($page_name)."' AND user_id='".intval(USERID)."'");
 	}else{
 		// otherwise, we need to make a new entry
-		$sql->db_Insert("what_twobyfour", "'', '".intval(USERID)."', '".$tp->toDB(USERNAME)."', '".$tp->toDB($page_name)."', '".time()."', '1'") or die(mysql_error());
+		$sql->db_Insert("what_twobyfour", "NULL, '".intval(USERID)."', '".$tp->toDB(USERNAME)."', '".$tp->toDB($page_name)."', '".time()."', '1'") or die(mysql_error());
 	}
 }
 

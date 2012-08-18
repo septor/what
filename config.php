@@ -4,6 +4,7 @@ $eplug_admin = TRUE;
 if(!defined("e107_INIT")) {
 	require_once("../../class2.php");
 }
+require_once(e_HANDLER."userclass_class.php");
 if(!getperms("P")){ header("location:".e_BASE."index.php"); exit;}
 require_once(e_ADMIN."auth.php");
 
@@ -13,7 +14,7 @@ if (isset($_POST['updatesettings'])) {
 	//general
 	$pref['what_slim_viewaccess'] = $_POST['slim_access'];
 	$pref['what_fatty_viewaccess'] = $_POST['fatty_access'];
-	$pref['what_twobyfour_viewaccess'] = $_POST['twobyfouraccess'];
+	$pref['what_twobyfour_viewaccess'] = $_POST['twobyfour_access'];
 
 	//fatty
 	$pref['what_fatty_timeframe'] = $_POST['timeframe'];
@@ -32,30 +33,30 @@ $text = "<div style='text-align:center'>
 <form action='".e_SELF."' method='post'>
 <table style='width:85%' class='fborder'>
 <tr>
-<td colspan'2' class='forumheader' style='text-align:center; font-weight:bold;'>
+<td colspan='2' class='forumheader' style='text-align:center; font-weight:bold;'>
 General Configuration
 </td>
 </tr>
 <tr>
 <td style='width:50%' class='forumheader3'>Slim Menu View Access</td>
 <td style='width:50%; text-align:right' class='forumheader3'>
-".r_userclass('slim_access', $pref['what_slim_viewaccess'], 'off', 'nobody,member,admin,classes')."
+".r_userclass('slim_access', $pref['what_slim_viewaccess'], 'off', 'nobody,public,guest,member,admin,classes')."
 </td>
 </tr>
 <tr>
 <td style='width:50%' class='forumheader3'>Fatty Menu View Access</td>
 <td style='width:50%; text-align:right' class='forumheader3'>
-".r_userclass('fatty_access', $pref['what_fatty_viewaccess'], 'off', 'nobody,member,admin,classes')."
+".r_userclass('fatty_access', $pref['what_fatty_viewaccess'], 'off', 'nobody,public,guest,member,admin,classes')."
 </td>
 </tr>
 <tr>
 <td style='width:50%' class='forumheader3'>Twobyfour Menu View Access</td>
 <td style='width:50%; text-align:right' class='forumheader3'>
-".r_userclass('twobyfour_access', $pref['what_twobyfour_viewaccess'], 'off', 'nobody,member,admin,classes')."
+".r_userclass('twobyfour_access', $pref['what_twobyfour_viewaccess'], 'off', 'nobody,public,guest,member,admin,classes')."
 </td>
 </tr>
 <tr>
-<td colspan'2' class='forumheader' style='text-align:center; font-weight:bold;'>
+<td colspan='2' class='forumheader' style='text-align:center; font-weight:bold;'>
 Fatty Configuration
 </td>
 </tr>

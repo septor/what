@@ -8,7 +8,7 @@ include_lan(e_PLUGIN."what/languages/".e_LANGUAGE.".php");
 include_once(e_PLUGIN."what/circus.php");
 global $eMenuActive;
 
-if(USER){
+if(check_class($pref['what_fatty_viewaccess'])){
 	
 	$timeframe = (($pref['what_fatty_timeframe']) ? $pref['what_fatty_timeframe'] : 432000);
 	$sincewhen = (time() - $timeframe);
@@ -120,6 +120,7 @@ if(USER){
 	if($pref['what_fatty_layer'] == true){
 		$text .= "</div>";
 	}
+	$text .= "</div>";
 
 	$ns->tablerender(WHAT_LAN02, $text, 'what_fatty');
 }

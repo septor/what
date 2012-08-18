@@ -7,12 +7,12 @@ if (!defined("e107_INIT")) { exit; }
 
 // Plugin info -------------------------------------------------------------------------------------------------------
 $eplug_name = "What";
-$eplug_version = "0.2";
-$eplug_author = "septor";
-$eplug_url = "http://painswitch.com/";
+$eplug_version = "0.2.0";
+$eplug_author = "Patrick Weaver";
+$eplug_url = "http://trickmod.com/";
 $eplug_email = "patrickweaver@gmail.com";
 $eplug_description = "Site activity menu package!";
-$eplug_compatible = "e107 v0.7.*";
+$eplug_compatible = "e107 v1.0+";
 $eplug_readme = "";
 
 // Name of the plugin's folder -------------------------------------------------------------------------------------
@@ -41,16 +41,16 @@ $eplug_prefs = array(
  );
 
 // List of table names -----------------------------------------------------------------------------------------------
-$eplug_table_names = "what_twobyfour";
+$eplug_table_names = array('what_twobyfour');
 
 // List of sql requests to create tables -----------------------------------------------------------------------------
 $eplug_tables = array(
 	"CREATE TABLE ".MPREFIX."what_twobyfour (
 	id int(10) unsigned NOT NULL auto_increment,
-	user_id int(10) unsigned NOT NULL default '',
-	user_name varchar(250) NOT NULL default '',
-	page_name varchar(250) NOT NULL default '',
-	visit_time varchar(250) NOT NULL default '',
+	user_id int(10) unsigned NOT NULL,
+	user_name varchar(250) NOT NULL,
+	page_name varchar(250) NOT NULL,
+	visit_time varchar(250) NOT NULL,
 	count int(10) unsigned NOT NULL default '0',
 	PRIMARY KEY  (id)
 	) ENGINE=MyISAM AUTO_INCREMENT=1;");
@@ -61,7 +61,7 @@ $eplug_link_name = "";
 $eplug_link_url = "";
 
 // Text to display after plugin successfully installed ------------------------------------------------------------------
-$eplug_done = "What has successfully been installed!";
+$eplug_done = "What has successfully been installed? Oh yeah, the What plugin has!";
 $eplug_upgrade_done = "What has been updated? Oh yeah, the What plugin has!";
 
 $upgrade_alter_tables = "";
