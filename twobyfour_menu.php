@@ -6,8 +6,7 @@ if (!defined('e107_INIT')) { exit(); }
 
 include_lan(e_PLUGIN."what/languages/".e_LANGUAGE.".php");
 
-if(USER){
-	
+if(check_class($pref['what_twobyfour_viewaccess'])){
 	$sincewhen = (time() - 86400);
 	$text = "The following users have visited the site in the last 24 hours:<br /><br />";
 	
@@ -21,7 +20,7 @@ if(USER){
 			$sql->db_Select("what_twobyfour", "*", "ORDER BY visit_time DESC", "user_id='".intval($row['user_id'])."'") or die(mysql_error());
 			while($row2 = $sql->db_Fetch()){
 				if($row2['visit_time'] > $sincewhen){
-					$text .= "<li><b>".date("h:i", $row2['visit_time'])."</b> - <a href='".e_BASE.$row2['page_name']."'>".((strpos($row2['page_name'], "/")) ? substr(strrchr($row2['page_name'], "/"), 1) : $row2['page_name'])."</a> ".($row2['count'] > 1 ? "<span class='smalltext'>(".$row2['count'].")</span>" : "")."</li>";
+					$text .= "<li><b>".date("h:iA", $row2['visit_time'])."</b> - <a href='".e_BASE.$row2['page_name']."'>".((strpos($row2['page_name'], "/")) ? substr(strrchr($row2['page_name'], "/"), 1) : $row2['page_name'])."</a> ".($row2['count'] > 1 ? "<span class='smalltext'>(".$row2['count'].")</span>" : "")."</li>";
 				}
 			}
 

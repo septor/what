@@ -7,11 +7,11 @@ if (!defined("e107_INIT")) { exit; }
 
 // Plugin info -------------------------------------------------------------------------------------------------------
 $eplug_name = "What";
-$eplug_version = "0.2.0";
+$eplug_version = "0.2.1";
 $eplug_author = "Patrick Weaver";
 $eplug_url = "http://trickmod.com/";
 $eplug_email = "patrickweaver@gmail.com";
-$eplug_description = "Site activity menu package!";
+$eplug_description = "Site activity menus (and more) package!";
 $eplug_compatible = "e107 v1.0+";
 $eplug_readme = "";
 
