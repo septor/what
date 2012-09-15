@@ -6,9 +6,8 @@
 
 // ------------------------------- */
 
-
 // first, if the visitor is a user and isn't "viewing" index.php, we start the logging process
-if(USER && $_SERVER['PHP_SELF'] != "/index.php"){
+if(USER && substr(strrchr($_SERVER['PHP_SELF'], "/"), 1) != "index.php"){
 
 	// next, we delete all the entries that are greater than 24 hours old
 	// this helps keep the database table from growing extremely large with unused entries
@@ -25,7 +24,7 @@ if(USER && $_SERVER['PHP_SELF'] != "/index.php"){
 
 	// before we begin, let's clean up the page output name
 	// we want to remove the beginning slash (/) as well as convert all forum pages to forum.php
-	$page_name = substr($_SERVER['PHP_SELF'], 1, (strlen($_SERVER['PHP_SELF']) - 1));
+	$page_name = str_replace(SITEURLBASE.e_HTTP, "", e_SELF);
 	$page_name = str_replace(array("_viewforum", "_viewtopic"), array("", ""), $page_name);
 
 	// gather the amount of times the user has visited this page
