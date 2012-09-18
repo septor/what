@@ -1,10 +1,7 @@
 <?php
 /* ------------------------------- //
-
 - What: Data Logging for Twobyfour!
--- NOTICE: this file may be rewritten multiple times to help with performance issues (if they happen)!
-
-// ------------------------------- */
+---------------------------------- */
 
 // first, if the visitor is a user and isn't "viewing" index.php, we start the logging process
 if(USER && substr(strrchr($_SERVER['PHP_SELF'], "/"), 1) != "index.php"){

@@ -19,20 +19,30 @@ if(check_class($pref['what_fatty_viewaccess'])){
 	}
 	
 	if(strtolower($pref['what_fatty_notify']) == "date"){
-		$text .= "As of ".date("F jS, Y", $sincewhen)." the following has happened:<br /><br />";
+		$text .= str_replace("{0}", date("F jS, Y", $sincewhen), WHATFATTY_LAN01)."<br /><br />";
 	}else if(strtolower($pref['what_fatty_notify']) == "day"){
-		$text .= "This is what has happened in the last ".intval(intval($timeframe) / 86400)." day".(intval(intval($timeframe) / 86400) > 1 ? "s" : "").":<br /><br />";
+
+		if(intval(intval($timeframe) / 86400) > 1){
+			$text .= WHATFATTY_LAN02."<br /><br />";
+		}else{
+			$text .= str_replace("{0}", intval(intval($timeframe) / 86400), WHATFATTY_LAN03)."<br /><br />";
+		}
 	}else{
 		$text .= "";
 	}
 
 	// news posts
 	if($sql->db_Count("news", "(*)", "WHERE `news_datestamp` > {$sincewhen} AND news_class REGEXP '".e_CLASS_REGEXP."'") > 0){
-		$text .= "<div class='forumheader'>News Posts</div><br />\n<ul>";
+		$text .= "<div class='forumheader'>".WHATFATTY_CAPLAN01."</div><br />\n<ul>";
 		$sql->db_Select("news", "*", "ORDER BY news_id DESC", "WHERE news_class REGEXP '".e_CLASS_REGEXP."'") or die(mysql_error());
 		while($row = $sql->db_Fetch()){
 			if($row['news_datestamp'] > $sincewhen){
-				$text .= "<li><a href='".e_BASE."user.php?id.".$row['news_author']."'>".get_username($row['news_author'])."</a> posted <a href='".SITEURL."news.php?item.".$row['news_id']."'>".$row['news_title']."</a></li>";
+				$text .= "<li>
+				".str_replace(
+					array('{0}', '{1}'),
+					array("<a href='".e_BASE."user.php?id.".$row['news_author']."'>".get_username($row['news_author'])."</a>", "<a href='".SITEURL."news.php?item.".$row['news_id']."'>".$row['news_title']."</a>"),
+					WHATFATTY_LAN04)."
+				</li>";
 			}
 		}
 		$text .= "</ul>\n<br />";
@@ -40,11 +50,16 @@ if(check_class($pref['what_fatty_viewaccess'])){
 
 	// downloads
 	if($sql->db_Count("download", "(*)", "WHERE `download_datestamp` > ".$sincewhen) > 0){
-		$text .= "<div class='forumheader'>Downloads</div><br />\n<ul>";
+		$text .= "<div class='forumheader'>".WHATFATTY_CAPLAN02."</div><br />\n<ul>";
 		$sql->db_Select("download", "*") or die(mysql_error());
 		while($row = $sql->db_Fetch()){
 			if($row['download_datestamp'] > $sincewhen){
-				$text .= "<li><a href='".SITEURL."download.php?view.".$row['download_id']."'>".$row['download_name']."</a> was posted in <a href='".SITEURL."download.php?list.".$row['download_category']."'>".get_downloadcat($row['download_category'])."</a></li>";
+				$text .= "<li>
+				".str_replace(
+					array('{0}', '{1}'),
+					array("<a href='".SITEURL."download.php?view.".$row['download_id']."'>".$row['download_name']."</a> ", "<a href='".SITEURL."download.php?list.".$row['download_category']."'>".get_downloadcat($row['download_category'])."</a>"),
+					WHATFATTY_LAN05)."
+				</li>";
 			}
 		}
 		$text .= "</ul><br />";
@@ -52,14 +67,18 @@ if(check_class($pref['what_fatty_viewaccess'])){
 
 	// comments
 	if($sql->db_Count("comments", "(*)", "WHERE `comment_datestamp` > ".$sincewhen) > 0){
-		$text .= "<div class='forumheader'>Comments</div><br />\n<ul>";
+		$text .= "<div class='forumheader'>".WHATFATTY_CAPLAN03."</div><br />\n<ul>";
 		$sql->db_Select("comments", "*", "ORDER BY comment_id DESC", "no-where") or die(mysql_error());
 		while($row = $sql->db_Fetch()){
 
 			$author = explode(".", $row['comment_author']);
 
 			if($row['comment_datestamp'] > $sincewhen){
-				$text .= "<li><a href='".e_BASE."user.php?id.".$author[0]."'>".$author[1]."</a> commented on <a href='".SITEURL."comment.php?comment.news.".$row['comment_item_id']."'>".get_newstitle($row['comment_item_id'])."</a></li>";
+				$text .= "<li>".str_replace(
+					array('{0}', '{1}'),
+					array("<a href='".e_BASE."user.php?id.".$author[0]."'>".$author[1]."</a>", "<a href='".SITEURL."comment.php?comment.news.".$row['comment_item_id']."'>".get_newstitle($row['comment_item_id'])."</a>"),
+					WHATFATTY_LAN06)."
+				</li>";
 			}
 		}
 		$text .= "</ul><br />";
@@ -68,14 +87,14 @@ if(check_class($pref['what_fatty_viewaccess'])){
 	// chatbox posts
 	if(in_array('chatbox_menu',$eMenuActive)){
 		if($sql->db_Count("chatbox", "(*)", "WHERE `cb_datestamp` > ".$sincewhen) > 0){
-			$text .= "<div class='forumheader'>Chatbox Posts</div><br />\n<ul>";
+			$text .= "<div class='forumheader'>".WHATFATTY_CAPLAN04."</div><br />\n<ul>";
 			$sql->db_Select("chatbox", "*", "ORDER BY cb_id DESC", "no-where") or die(mysql_error());
 			while($row = $sql->db_Fetch()){
 
 				$author = explode(".", $row['cb_nick']);
 
 				if($row['cb_datestamp'] > $sincewhen){
-					$text .= "<li><a href='".e_BASE."user.php?id.".$author[0]."'>".$author[1]."</a> posted in the chatbox.</li>";
+					$text .= "<li>".str_replace("{0}", "<a href='".e_BASE."user.php?id.".$author[0]."'>".$author[1]."</a>", WHATFATTY_LAN07)."</li>";
 				}
 			}
 			$text .= "</ul><br />";
@@ -84,7 +103,7 @@ if(check_class($pref['what_fatty_viewaccess'])){
 
 	// forum posts
 	if($sql->db_Count("forum_t", "(*)", "WHERE `thread_lastpost` > ".$sincewhen) > 0){
-		$text .= "<div class='forumheader'>Forum Posts</div><br />\n<ul>";
+		$text .= "<div class='forumheader'>".WHATFATTY_CAPLAN05."</div><br />\n<ul>";
 		$sql->db_Select_gen("
 		SELECT t.thread_id, t.thread_name, t.thread_datestamp, t.thread_user, t.thread_lastpost, f.forum_id, f.forum_name, f.forum_class, u.user_name, fp.forum_class, lp.user_name AS lp_name, lp.user_id AS lp_id
 		FROM #forum_t AS t
@@ -98,7 +117,11 @@ if(check_class($pref['what_fatty_viewaccess'])){
 
 		while($row = $sql->db_Fetch()){
 			if($row['thread_lastpost'] > $sincewhen){
-				$text .= "<li><a href='".e_BASE."user.php?id.".$row['lp_id']."'>".$row['lp_name']."</a> posted in <a href='".e_PLUGIN."forum/forum_viewtopic.php?".$row['thread_id']."'>".$row['thread_name']."</a> under <a href='".e_PLUGIN."forum/forum_viewforum.php?".$row['forum_id']."'>".$row['forum_name']."</a></li>";
+				$text .= "<li>".str_replace(
+					array('{0}', '{1}', '{2}'),
+					array("<a href='".e_BASE."user.php?id.".$row['lp_id']."'>".$row['lp_name']."</a>", "<a href='".e_PLUGIN."forum/forum_viewtopic.php?".$row['thread_id']."'>".$row['thread_name']."</a>", "<a href='".e_PLUGIN."forum/forum_viewforum.php?".$row['forum_id']."'>".$row['forum_name']."</a>"),
+					WHATFATTY_LAN08)."
+				</li>";
 			}
 		}
 		$text .= "</ul><br />";
@@ -107,11 +130,11 @@ if(check_class($pref['what_fatty_viewaccess'])){
 
 	// new members
 	if($sql->db_Count('user', '(user_join)', 'WHERE user_join > '.$sincewhen) > 0){
-		$text .= "<div class='forumheader'>New Members</div><br />\n<ul>";
+		$text .= "<div class='forumheader'>".WHATFATTY_CAPLAN06."</div><br />\n<ul>";
 		$sql->db_Select("user", "*", "ORDER BY user_id DESC", "no-where") or die(mysql_error());
 		while($row = $sql->db_Fetch()){
 			if($row['user_join'] > $sincewhen){
-				$text .= "<li><a href='".SITEURL."user.php?id.".$row['user_id']."'>".$row['user_name']."</a> has joined the site.</li>";
+				$text .= "<li>".str_replace("{0}", "<a href='".SITEURL."user.php?id.".$row['user_id']."'>".$row['user_name']."</a>", WHATFATTY_LAN09)."</li>";
 			}
 		}
 		$text .= "</ul><br />";
@@ -120,7 +143,6 @@ if(check_class($pref['what_fatty_viewaccess'])){
 	if($pref['what_fatty_layer'] == true){
 		$text .= "</div>";
 	}
-	$text .= "</div>";
 
 	$ns->tablerender(WHAT_LAN02, $text, 'what_fatty');
 }
