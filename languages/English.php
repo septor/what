@@ -41,17 +41,18 @@ define("WHATFATTY_CAPLAN06", "New Members");
 define("WHATFATTY_LAN01", "As of {0} the following has happened:");
 define("WHATFATTY_LAN02", "This is what has happened in the last day:");
 define("WHATFATTY_LAN03", "This is what has happened in the last {0} days:");
+define("WHATFATTY_LAN04", "There are no new items to display.");
 
 // {0} is converted to the person or object
 // {1} is converted to the item or holder
 // {2} only valid for forum posts, converts to the forum name
 // eg: LAN01 refers to a new news item; septor posted The Rat Boy
-define("WHATFATTY_LAN04", "{0} posted {1}");
-define("WHATFATTY_LAN05", "{0} was posted in {1}");
-define("WHATFATTY_LAN06", "{0} commented on {1}");
-define("WHATFATTY_LAN07", "{0} posted in the chatbox.");
-define("WHATFATTY_LAN08", "{0} posted in {1} under {2}");
-define("WHATFATTY_LAN09", "{0} has joined the site.");
+define("WHATFATTY_LAN05", "{0} posted {1}");
+define("WHATFATTY_LAN06", "{0} was posted in {1}");
+define("WHATFATTY_LAN07", "{0} commented on {1}");
+define("WHATFATTY_LAN08", "{0} posted in the chatbox.");
+define("WHATFATTY_LAN09", "{0} posted in {1} under {2}");
+define("WHATFATTY_LAN10", "{0} has joined the site.");
 
 // ------------------------------------------------------------------- //
 
